@@ -1,8 +1,8 @@
-# 💰 Expense Tracker
+#  Expense Tracker
 
 Aplikasi web untuk mencatat dan memvisualisasikan pengeluaran harian, dibangun dengan **Python + Flask**. Dilengkapi sistem autentikasi user (register/login), CRUD pengeluaran, filter & pagination, export CSV, serta grafik interaktif (Chart.js).
 
-## ✨ Fitur
+##  Fitur
 
 - **Autentikasi User**: Register, login, logout dengan password ter-hash (Werkzeug), session via Flask-Login.
 - **Manajemen Pengeluaran (CRUD)**: Tambah, lihat, edit, hapus data pengeluaran — setiap user hanya bisa melihat datanya sendiri.
@@ -15,7 +15,7 @@ Aplikasi web untuk mencatat dan memvisualisasikan pengeluaran harian, dibangun d
 - **Keamanan**: CSRF protection (Flask-WTF), validasi form, password hashing.
 - **UI Responsif**: Bootstrap 5 + Font Awesome, tampilan mobile-friendly.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer          | Teknologi                          |
 |----------------|-------------------------------------|
@@ -25,7 +25,7 @@ Aplikasi web untuk mencatat dan memvisualisasikan pengeluaran harian, dibangun d
 | Form & Validasi| Flask-WTF, WTForms                  |
 | Frontend       | Jinja2, Bootstrap 5, Chart.js       |
 
-## 📁 Struktur Project
+##  Struktur Project
 
 ```
 expense_tracker/
@@ -52,7 +52,7 @@ expense_tracker/
     └── css/style.css
 ```
 
-## 🚀 Cara Menjalankan
+##  Cara Menjalankan
 
 1. **Clone / masuk ke folder project**
    ```bash
@@ -86,19 +86,16 @@ expense_tracker/
 4. Lihat ringkasan & grafik otomatis di **Dashboard**.
 5. Kelola/edit/hapus data di halaman **Pengeluaran**, gunakan filter kategori/tanggal, atau export ke CSV.
 
-## 🔒 Catatan Keamanan (Production)
+##  Catatan Keamanan (Production)
 
 - Ganti `SECRET_KEY` di `config.py` dengan nilai acak yang aman (gunakan environment variable).
 - Set `debug=False` sebelum deploy.
 - Pertimbangkan migrasi ke PostgreSQL/MySQL untuk skala produksi (tinggal ganti `SQLALCHEMY_DATABASE_URI`).
 - Gunakan HTTPS dan `SESSION_COOKIE_SECURE=True` di production.
 
-## 📌 Kemungkinan Pengembangan Selanjutnya
+##  Kemungkinan Pengembangan Selanjutnya
 
 - Budget/limit bulanan per kategori dengan notifikasi.
 - Multi-currency support.
 - Upload struk/bukti pengeluaran (attachment).
 - API RESTful terpisah untuk integrasi mobile app.
-
----
-Dibuat sebagai contoh proyek portofolio — full-stack Flask app dengan autentikasi, CRUD, dan visualisasi data.
