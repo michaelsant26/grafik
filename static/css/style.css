@@ -1,0 +1,56 @@
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a0ca3;
+}
+
+body {
+    background-color: #f4f6fb;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.app-navbar {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+}
+
+.card {
+    border: none;
+    border-radius: 14px;
+}
+
+.stat-card {
+    border-left: 4px solid var(--primary);
+}
+
+.auth-card {
+    border-radius: 16px;
+}
+
+.category-badge {
+    background-color: #e7ecfd;
+    color: var(--primary-dark);
+    font-weight: 500;
+    padding: 6px 10px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.nav-link.active {
+    font-weight: 600;
+    border-bottom: 2px solid #fff;
+}
+
+.table thead {
+    background-color: #f8f9fc;
+}
+
+footer {
+    color: #9aa0ac;
+}

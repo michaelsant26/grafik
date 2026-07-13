@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Daftar Pengeluaran - Expense Tracker{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <h3 class="fw-bold mb-0"><i class="fa-solid fa-list me-2 text-primary"></i>Daftar Pengeluaran</h3>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('expenses.export_csv') }}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-file-csv me-1"></i> Export CSV
+        </a>
+        <a href="{{ url_for('expenses.add_expense') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus me-1"></i> Tambah
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Kategori</label>
+                <select name="category" class="form-select">
+                    <option value="">Semua Kategori</option>
+                    {% for c in categories %}
+                    <option value="{{ c }}" {% if c == selected_category %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Dari Tanggal</label>
+                <input type="date" name="start_date" class="form-control" value="{{ start_date }}">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small mb-1">Sampai Tanggal</label>
+                <input type="date" name="end_date" class="form-control" value="{{ end_date }}">
+            </div>
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-fill">
+                    <i class="fa-solid fa-filter me-1"></i> Filter
+                </button>
+                <a href="{{ url_for('expenses.list_expenses') }}" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Menampilkan {{ expenses|length }} dari {{ pagination.total }} transaksi</span>
+            <span class="fw-bold">Total: Rp {{ "{:,.0f}".format(total_filtered).replace(",", ".") }}</span>
+        </div>
+
+        {% if expenses %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Kategori</th>
+                        <th>Deskripsi</th>
+                        <th class="text-end">Jumlah</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in expenses %}
+                    <tr>
+                        <td>{{ e.date.strftime("%d %b %Y") }}</td>
+                        <td><span class="badge category-badge">{{ e.category }}</span></td>
+                        <td>{{ e.description or "-" }}</td>
+                        <td class="text-end fw-semibold">Rp {{ "{:,.0f}".format(e.amount).replace(",", ".") }}</td>
+                        <td class="text-center">
+                            <a href="{{ url_for('expenses.edit_expense', expense_id=e.id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-outline-danger" title="Hapus"
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ e.id }}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                            <div class="modal fade" id="deleteModal{{ e.id }}" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body p-4">
+                                            <p class="mb-3">Yakin ingin menghapus pengeluaran <strong>{{ e.category }}</strong> sebesar <strong>Rp {{ "{:,.0f}".format(e.amount).replace(",", ".") }}</strong>?</p>
+                                            <div class="d-flex justify-content-end gap-2">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <form method="POST" action="{{ url_for('expenses.delete_expense', expense_id=e.id) }}">
+                                                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <nav class="mt-3">
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('expenses.list_expenses', page=pagination.prev_num, category=selected_category, start_date=start_date, end_date=end_date) }}">&laquo;</a>
+                </li>
+                {% for p in pagination.iter_pages() %}
+                    {% if p %}
+                    <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('expenses.list_expenses', page=p, category=selected_category, start_date=start_date, end_date=end_date) }}">{{ p }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('expenses.list_expenses', page=pagination.next_num, category=selected_category, start_date=start_date, end_date=end_date) }}">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <p class="text-muted text-center py-4 mb-0">Tidak ada data pengeluaran yang ditemukan.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
