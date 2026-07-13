@@ -99,3 +99,9 @@ expense_tracker/
 - Multi-currency support.
 - Upload struk/bukti pengeluaran (attachment).
 - API RESTful terpisah untuk integrasi mobile app.
+
+## Screenshots
+![Dashboard](IMG-20260714-WA0009.jpg)
+![Pengeluaran](IMG-20260714-WA0008.jpg)
+![Login](IMG-20260714-WA0006.jpg)
+![Buat Akub](IMG-20260714-WA0005.jpg)
