@@ -78,7 +78,7 @@ expense_tracker/
 
 5. Buka browser ke `http://127.0.0.1:5000` — database SQLite (`instance/expense_tracker.db`) akan otomatis dibuat saat pertama kali dijalankan.
 
-## 🔑 Alur Penggunaan
+## Alur Penggunaan
 
 1. Buka `/register` untuk membuat akun baru.
 2. Login di `/login`.
